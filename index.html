@@ -1,5 +1,21 @@
+<!DOCTYPE html>
+<html>
 
-<script src="index.js"></script>
+<head>
+    <script src="x-container.js"></script>
+    <script src="x-block.js"></script>
+</head>
+
 <body>
-    <xdiv>coucou</xdiv>
+    <div is="x-container" x-direction="vertical" x-debug="true">
+        <div is="x-block" x-size="auto,fill" x-debug="true">
+            content 1
+        </div>
+        <div is="x-block" x-size="fill,fill" x-debug="true">
+            content 2
+        </div>
+    </div>
+
 </body>
+
+</html>

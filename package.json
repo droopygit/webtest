@@ -1,0 +1,24 @@
+{
+  "name": "webtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "box.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "browser-sync start -s -f ./*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/droopygit/webtest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/droopygit/webtest/issues"
+  },
+  "homepage": "https://github.com/droopygit/webtest#readme",
+  "devDependencies": {
+    "browser-sync": "^2.27.10"
+  }
+}
