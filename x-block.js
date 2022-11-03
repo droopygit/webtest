@@ -81,7 +81,7 @@ class XBlockElement extends HTMLElement {
     }
   }
 
-  // Get the size  with the pattern 'width,height'
+  // Get the size, with the pattern 'width,height'
   // Can be 'auto' (sized to the content), fill (sized to the parent) or a CSS size
   // the default is 'fill'
   configureSize() {
@@ -121,6 +121,9 @@ class XBlockElement extends HTMLElement {
     }
   }
 
+  // Get the dock, with the pattern 'x,y'
+  // Can be 'left', 'center', 'right' and 'top', 'center', 'bottom'
+  // the default is 'center,center'
   configureDock() {
 
     let dockValue = this.getAttribute("dock");
@@ -162,7 +165,6 @@ class XBlockElement extends HTMLElement {
   }
 
   fill() {
-    console.log("fill");
     this.style.flexGrow = "1";
     this.innerContainer.style.flexGrow = "1";
     this.innerContainer.style.alignSelf = "stretch";
