@@ -121,18 +121,6 @@ class XBlockElement extends HTMLElement {
     }
   }
 
-  // getFlexDirection(element) {
-
-  //   // Check if set on the current block
-  //   let direction = this.getAttribute("direction");
-  //   if (direction) return direction;
-
-  //   // Check if there is a parent block
-  //   if (!element.parentElement) return "row";
-
-  //   return this.getFlexDirection(element.parentElement);
-  // }
-
   configureDock() {
 
     let dockValue = this.getAttribute("dock");
