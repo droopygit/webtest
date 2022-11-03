@@ -1,4 +1,4 @@
-class XContainer extends HTMLDivElement {
+class XContainerElement extends HTMLElement {
 
   debugMode = false;
 
@@ -9,7 +9,7 @@ class XContainer extends HTMLDivElement {
   connectedCallback() {
 
     // Check if we are in debug mode
-    this.debugMode = this.getAttribute('x-debug') === "true";
+    this.debugMode = this.getAttribute('debug') === "true";
 
     // Configure the body if is a top level container
     if (this.parentNode.nodeName === "BODY") {
@@ -30,7 +30,7 @@ class XContainer extends HTMLDivElement {
     }
 
     // Configure direction
-    const direction = this.getAttribute('x-direction');
+    const direction = this.getAttribute('direction');
     switch (direction) {
       case "vertical":
         this.style.flexDirection = "column";
@@ -47,6 +47,6 @@ class XContainer extends HTMLDivElement {
 
 }
 
-customElements.define("x-container", XContainer, { extends: "div" });
+customElements.define("x-container", XContainerElement);
 
 
