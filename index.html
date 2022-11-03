@@ -2,19 +2,32 @@
 <html>
 
 <head>
-    <script src="x-container.js"></script>
     <script src="x-block.js"></script>
 </head>
 
 <body>
-    <div is="x-container" x-direction="vertical" x-debug="true">
-        <div is="x-block" x-size="auto,fill" x-debug="true">
-            content 1
-        </div>
-        <div is="x-block" x-size="fill,fill" x-debug="true">
-            content 2
-        </div>
-    </div>
+
+    <x-block direction="vertical" size="fill,fill" dock="top,left" debug>
+        <x-block dock="left,center" size="fill,10rem">
+            <h1>Header</h1>
+        </x-block>
+        <x-block direction="horizontal">
+            <x-block dock="left,top" size="30%" direction="vertical" style="padding: 2rem;">
+                <h1>Menu</h1>
+                <ul>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                </ul>
+            </x-block>
+            <x-block style="padding: 10px;">
+                Content
+            </x-block>
+        </x-block>
+        <x-block size="fill,100px">
+            Footer
+        </x-block>
+    </x-block>
 
 </body>
 
