@@ -30,19 +30,24 @@ class XBlockElement extends HTMLElement {
     if (this.parentNode.nodeName === "BODY") {
       this.parentElement.style.padding = "0";
       this.parentElement.style.margin = "0";
-      this.parentElement.style.minHeight = "100vh";
       this.parentElement.style.display = "flex";
+      this.parentElement.style.height = "100vh";
+      this.parentElement.style.minHeight = "100vh";
     } 
 
     // Configure the block
     var randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    this.style.border = this.debugMode ? `2px solid #${randomColor}` : "none";
-    this.style.margin = this.debugMode ? "2px" : "0";
+    if (this.debugMode) {
+      this.style.border = `2px solid #${randomColor}`;
+      this.style.margin = "2px";
+    }
     this.style.flexGrow = "0";
     this.style.alignSelf = "auto";
     this.style.display = "flex";
     this.style.justifyContent = "flex-start";
-
+    this.style.overflowX = this.hasAttribute("scrollableX") ? "auto" : "hidden";
+    this.style.overflowY = this.hasAttribute("scrollableY") ? "auto" : "hidden";
+    
     // Configure the inner container
     this.innerContainer.style.display = "flex";
     this.innerContainer.style.flexGrow = "0";
@@ -52,7 +57,6 @@ class XBlockElement extends HTMLElement {
     // Configure the slot
     this.slot.style.display = "flex";
     this.slot.style.flexGrow = "0";
-    this.slot.style.flexShrink = "0";
     this.slot.style.overflow = "auto";
 
     // Set the correct size
@@ -106,6 +110,7 @@ class XBlockElement extends HTMLElement {
         }
         break;
       default:
+        this.style.flexShrink = "0";
         this.style.flexBasis = width;
         break;
     }
@@ -117,6 +122,7 @@ class XBlockElement extends HTMLElement {
       case "fill":
         break;
       default:
+        this.style.flexBasis = height;
         break;
     }
   }
