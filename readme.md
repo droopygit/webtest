@@ -36,4 +36,31 @@ Indicates whether the element is scrollable vertically.
 Indicates whether the element is in debug mode. In debug mode, the element will show a border and a background color.
 
 ## Example
+
+````
+<html>
+<head>
+    <script src="x-block.js"></script>
+</head>
+<body>
+    <x-block direction="vertical">
+        <x-block size="fill,200px">
+            Header
+        </x-block>
+        <x-block>
+            <x-block>
+                Content 1
+            </x-block>
+            <x-block>
+                Content 2
+            </x-block>
+        </x-block>
+        <x-block size="fill,200px">
+            Footer
+        </x-block>
+    </x-block>
+</body>
+</html>
+````
+
 There is a simple example with the [index.html](index.html) file.
