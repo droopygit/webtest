@@ -27,12 +27,10 @@ class XBlockElement extends HTMLElement {
     this.debugMode = this.hasAttribute("debug") || this.parentElement.debugMode;
 
     // Configure the body if it's the top level block
-    if (this.parentNode.nodeName === "BODY") {
-      this.parentElement.style.padding = "0";
-      this.parentElement.style.margin = "0";
+    if (this.parentNode.nodeName !== "X-BLOCK") {
       this.parentElement.style.display = "flex";
-      this.parentElement.style.height = "100vh";
-      this.parentElement.style.minHeight = "100vh";
+      const parentStyle = window.getComputedStyle(this.parentElement);
+      this.parentElement.style.height = `calc(100vh - ${parentStyle.marginTop} - ${parentStyle.marginBottom} - ${parentStyle.paddingTop} - ${parentStyle.paddingBottom})`;
     } 
 
     // Configure the block
