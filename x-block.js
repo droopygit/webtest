@@ -9,7 +9,7 @@ class XBlockElement extends HTMLElement {
   constructor() {
 
     super();
-    
+
     // Create the shadow root from the template
     const template = document.createElement("template");
     template.innerHTML = this.templateContent;
@@ -26,12 +26,11 @@ class XBlockElement extends HTMLElement {
     // Check if we are in debug mode
     this.debugMode = this.hasAttribute("debug") || this.parentElement.debugMode;
 
-    // Configure the body if it's the top level block
+    // Configure the parent if it's not an x-block
     if (this.parentNode.nodeName !== "X-BLOCK") {
       this.parentElement.style.display = "flex";
-      const parentStyle = window.getComputedStyle(this.parentElement);
-      this.parentElement.style.height = `calc(100vh - ${parentStyle.marginTop} - ${parentStyle.marginBottom} - ${parentStyle.paddingTop} - ${parentStyle.paddingBottom})`;
-    } 
+      this.parentElement.style.flexDirection = "column";
+    }
 
     // Configure the block
     var randomColor = Math.floor(Math.random() * 16777215).toString(16);
@@ -45,7 +44,7 @@ class XBlockElement extends HTMLElement {
     this.style.justifyContent = "flex-start";
     this.style.overflowX = this.hasAttribute("scrollableX") ? "auto" : "hidden";
     this.style.overflowY = this.hasAttribute("scrollableY") ? "auto" : "hidden";
-    
+
     // Configure the inner container
     this.innerContainer.style.display = "flex";
     this.innerContainer.style.flexGrow = "0";
@@ -70,7 +69,7 @@ class XBlockElement extends HTMLElement {
 
     let directionValue = this.getAttribute("direction");
     if (!directionValue) directionValue = "horizontal";
-    
+
     this.direction = directionValue;
 
     switch (this.direction) {
@@ -119,10 +118,52 @@ class XBlockElement extends HTMLElement {
         break;
       case "fill":
         break;
+      case "filltoscreen":
+        window.addEventListener('load', () => this.setHeighProperties());
+        window.addEventListener('resize', () => this.setHeighProperties());
+        break
       default:
         this.style.flexBasis = height;
         break;
     }
+  }
+
+  // Set the height property of the element
+  // in case of a filltoscreen height
+  setHeighProperties() {
+    
+    // We hide the element to get the height
+    // of the other elements 
+    const displayType = this.style.display;
+    this.style.display = "none";
+    
+    // Get the height of the screen
+    // we don't use the vh unit because
+    // it's not accurate for mobile browsers
+    const windowHeight = window.innerHeight;
+    console.log("windowHeight", windowHeight);
+
+    // Get the height of the other elements
+    const otherElementsStyle = window.getComputedStyle(document.body);
+    const otherElementsHeight = document.body.offsetHeight;
+    const otherElementMagin = parseInt(otherElementsStyle.marginTop) + parseInt(otherElementsStyle.marginBottom);
+    const otherElementsTotalHeight = otherElementsHeight + otherElementMagin;
+    console.log("otherElementsTotalHeight", otherElementsTotalHeight);
+
+    // Get the space taken by the element
+    const elementStyle = window.getComputedStyle(this);
+    const elementMargin = parseInt(elementStyle.marginTop) + parseInt(elementStyle.marginBottom);
+    const elementPadding = parseInt(elementStyle.paddingTop) + parseInt(elementStyle.paddingBottom);
+    const elementBorder = parseInt(elementStyle.borderTopWidth) + parseInt(elementStyle.borderBottomWidth);
+    const elementTotalSpacing = elementMargin + elementPadding + elementBorder;
+    console.log("elementTotalSpacing", elementTotalSpacing);
+
+    // Set the height of the element
+    this.style.height = (windowHeight - otherElementsTotalHeight - elementTotalSpacing) + "px";
+    console.log("this.style.height", this.style.height);
+
+    // We restore the display type
+    this.style.display = displayType;
   }
 
   // Get the dock, with the pattern 'x,y'
@@ -166,6 +207,8 @@ class XBlockElement extends HTMLElement {
   }
 
   disconnectedCallback() {
+    window.removeEventListener('load', () => this.setHeighProperties());
+    window.removeEventListener('resize', () => this.setHeighProperties());
   }
 
   fill() {
